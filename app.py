@@ -14,11 +14,18 @@ import matplotlib.pylab as plt
 import string
 
 import re
+import datetime
+import logging
 import pandas as pd
+
+from sklearn.preprocessing import MultiLabelBinarizer
+mlb = MultiLabelBinarizer()
 
 stop_words = set(stopwords.words('english'))
 for i in ["'m", "'ve", "'s", "'d", "'re", "'ll", "'t"]: 
     stop_words.add(i)
+
+logging.getLogger().setLevel(logging.INFO)
 
 def preprocessing(extracted_text):
     '''The preprocessing step include:
@@ -53,6 +60,9 @@ app= Flask(__name__)
 #loading the pickle file for creating the web app
 model= joblib.load(open("finalized_model.sav", "rb"))
 
+# fitted_binarizer
+fitted_mlb = joblib.load(open("fitted_binarizer.sav", "rb"))
+
 #defining the different pages of html and specifying the features required to be filled in the html form
 @app.route("/")
 def home():
@@ -64,11 +74,15 @@ def predict():
     #specifying our parameters as data type float
     # convertir en dataframe
     ans=request.form
-    final_features= ans['title'] + ans['body']
+    final_features = ans['title'] + ans['body']
     serie_usertext = pd.Series(data=final_features)
-    prediction= model.predict(serie_usertext)
-    output= prediction
-    return render_template("index.html", prediction_text= "flower is {}".format(output))
+    prediction = model.predict(serie_usertext)
+    output = fitted_mlb.inverse_transform(prediction)
+    print(output)
+    #print(', '.join(output[0]))
+    date = datetime.datetime.now()
+    #logging.info(prediction)
+    return render_template("index.html", prediction_text= f"{str(date)}: Tags are {(', '.join(output[0]))}")
 #running the flask app
 if __name__ == "__main__":
     app.run(debug=True)

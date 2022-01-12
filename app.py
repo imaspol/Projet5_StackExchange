@@ -62,9 +62,6 @@ app = Flask(__name__)
 if not hasattr(sys.modules['__main__'], 'preprocessing'):
     setattr(sys.modules['__main__'], 'preprocessing', preprocessing)
 
-# HACK FOR PYTHON ANYWHERE
-setattr(sys.modules['__main__'], 'preprocessing', preprocessing)
-
 #loading the pickle file for creating the web app
 logging.info('load model')
 model= joblib.load(open("finalized_model.sav", "rb"))
@@ -90,17 +87,15 @@ def predict():
     #prediction = model.predict(serie_usertext)
     #print(prediction)
     #output = fitted_mlb.inverse_transform(prediction)
-    output = [(len(serie_usertext),0)]
+    output = [(str(len(serie_usertext)),"plop")]
     print(output)
     #print(', '.join(output[0]))
     date = datetime.datetime.now()
     #logging.info(prediction)
     return render_template("index.html", prediction_text= f"{str(date)}: Tags are {(', '.join(output[0]))}")
  
-def launch_flask():
-    logging.info('Running Flask Server')
-    app.run(debug=True)
 
 #running the flask app
 if __name__ == "__main__":
-    launch_flask()
+    logging.info('Running Flask Server')
+    app.run(debug=True)

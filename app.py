@@ -84,10 +84,9 @@ def predict():
     ans=request.form
     final_features = ans['title'] + ans['body']
     serie_usertext = pd.Series(data=final_features)
-    #prediction = model.predict(serie_usertext)
+    prediction = model.predict(serie_usertext)
     #print(prediction)
-    #output = fitted_mlb.inverse_transform(prediction)
-    output = [(str(len(serie_usertext)),"plop")]
+    output = fitted_mlb.inverse_transform(prediction)
     print(output)
     #print(', '.join(output[0]))
     date = datetime.datetime.now()

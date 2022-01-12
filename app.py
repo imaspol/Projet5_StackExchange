@@ -77,6 +77,7 @@ def predict():
     final_features = ans['title'] + ans['body']
     serie_usertext = pd.Series(data=final_features)
     prediction = model.predict(serie_usertext)
+    print(prediction)
     output = fitted_mlb.inverse_transform(prediction)
     print(output)
     #print(', '.join(output[0]))

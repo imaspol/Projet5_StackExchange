@@ -1,6 +1,7 @@
 #importing the necessary libraries for deployment
 from flask import Flask, request, jsonify, render_template
 import joblib
+import sys
 
 # Pre-processing
 from collections import Counter, defaultdict
@@ -55,30 +56,40 @@ def preprocessing(extracted_text):
     return filtered_sentence
 
 #naming our app as app
-app= Flask(__name__)
+flask_app = Flask(__name__)
+
+# HACK FOR PYTHON ANYWHERE
+if not hasattr(sys.modules['__main__'], 'preprocessing'):
+    setattr(sys.modules['__main__'], 'preprocessing', preprocessing)
+
+# HACK FOR PYTHON ANYWHERE
+setattr(sys.modules['__main__'], 'preprocessing', preprocessing)
 
 #loading the pickle file for creating the web app
-model= joblib.load(open("Projet5_StackExchange/finalized_model.sav", "rb"))
+logging.info('load model')
+model= joblib.load(open("finalized_model.sav", "rb"))
 
 # fitted_binarizer
-fitted_mlb = joblib.load(open("Projet5_StackExchange/fitted_binarizer.sav", "rb"))
+logging.info('load binarizer')
+fitted_mlb = joblib.load(open("fitted_binarizer.sav", "rb"))
 
 #defining the different pages of html and specifying the features required to be filled in the html form
-@app.route("/")
+@flask_app.route("/")
 def home():
     return render_template("index.html")
 
 #creating a function for the prediction model by specifying the parameters and feeding it to the ML model
-@app.route("/predict", methods=["POST"])
+@flask_app.route("/predict", methods=["POST"])
 def predict():
     #specifying our parameters as data type float
     # convertir en dataframe
     ans=request.form
     final_features = ans['title'] + ans['body']
     serie_usertext = pd.Series(data=final_features)
-    prediction = model.predict(serie_usertext)
-    print(prediction)
-    output = fitted_mlb.inverse_transform(prediction)
+    #prediction = model.predict(serie_usertext)
+    #print(prediction)
+    #output = fitted_mlb.inverse_transform(prediction)
+    output = [(len(serie_usertext),0)]
     print(output)
     #print(', '.join(output[0]))
     date = datetime.datetime.now()
@@ -86,4 +97,5 @@ def predict():
     return render_template("index.html", prediction_text= f"{str(date)}: Tags are {(', '.join(output[0]))}")
 #running the flask app
 if __name__ == "__main__":
-    app.run(debug=True)
+    logging.info('Running Flask Server')
+    flask_app.run(debug=True)

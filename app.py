@@ -56,7 +56,7 @@ def preprocessing(extracted_text):
     return filtered_sentence
 
 #naming our app as app
-flask_app = Flask(__name__)
+app = Flask(__name__)
 
 # HACK FOR PYTHON ANYWHERE
 if not hasattr(sys.modules['__main__'], 'preprocessing'):
@@ -75,12 +75,12 @@ fitted_mlb = joblib.load(open("fitted_binarizer.sav", "rb"))
 
 logging.info('finished loading')
 #defining the different pages of html and specifying the features required to be filled in the html form
-@flask_app.route("/")
+@app.route("/")
 def home():
     return render_template("index.html")
 
 #creating a function for the prediction model by specifying the parameters and feeding it to the ML model
-@flask_app.route("/predict", methods=["POST"])
+@app.route("/predict", methods=["POST"])
 def predict():
     #specifying our parameters as data type float
     # convertir en dataframe
@@ -99,7 +99,7 @@ def predict():
  
 def launch_flask():
     logging.info('Running Flask Server')
-    flask_app.run(debug=True)
+    app.run(debug=True)
 
 #running the flask app
 if __name__ == "__main__":

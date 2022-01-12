@@ -73,6 +73,7 @@ model= joblib.load(open("finalized_model.sav", "rb"))
 logging.info('load binarizer')
 fitted_mlb = joblib.load(open("fitted_binarizer.sav", "rb"))
 
+logging.info('finished loading')
 #defining the different pages of html and specifying the features required to be filled in the html form
 @flask_app.route("/")
 def home():
@@ -95,7 +96,11 @@ def predict():
     date = datetime.datetime.now()
     #logging.info(prediction)
     return render_template("index.html", prediction_text= f"{str(date)}: Tags are {(', '.join(output[0]))}")
-#running the flask app
-if __name__ == "__main__":
+ 
+def launch_flask():
     logging.info('Running Flask Server')
     flask_app.run(debug=True)
+
+#running the flask app
+if __name__ == "__main__":
+    launch_flask()

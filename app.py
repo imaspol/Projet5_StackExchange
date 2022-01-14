@@ -74,7 +74,9 @@ logging.info('finished loading')
 #defining the different pages of html and specifying the features required to be filled in the html form
 @app.route("/")
 def home():
-    return render_template("index.html")
+    _default_title = "What programming language to choose?"
+    _default_body = """<p>Hi! What programming language to choose between Python, Java and C++?</p>"""
+    return render_template("index.html", title_text=_default_title, body_text=_default_body)
 
 #creating a function for the prediction model by specifying the parameters and feeding it to the ML model
 @app.route("/predict", methods=["POST"])
@@ -82,6 +84,8 @@ def predict():
     #specifying our parameters as data type float
     # convertir en dataframe
     ans=request.form
+    _title = ans['title'].strip()
+    _body = ans['body'].strip()
     final_features = ans['title'] + ans['body']
     serie_usertext = pd.Series(data=final_features)
     prediction = model.predict(serie_usertext)
@@ -91,7 +95,10 @@ def predict():
     #print(', '.join(output[0]))
     date = datetime.datetime.now()
     #logging.info(prediction)
-    return render_template("index.html", prediction_text= f"{str(date)}: Tags are {(', '.join(output[0]))}")
+    return render_template("index.html",
+        title_text=_title, body_text=_body,
+        prediction_text= f"{str(date)}: Tags are {(', '.join(output[0]))}"
+    )
  
 
 #running the flask app

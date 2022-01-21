@@ -9,7 +9,6 @@ These are the images under the Creative Commons licence.
 ![mailbox](https://user-images.githubusercontent.com/11682333/150525182-1d24dbf1-2e41-49e7-8d42-5279c4addce8.jpg)
 ![Mailbox-Colored-Letter-Boxes-Post-Red-Floral-5261874](https://user-images.githubusercontent.com/11682333/150525192-0bf9ea04-6c92-40d8-a2a8-03806695798f.jpg)
 ![question-mark](https://user-images.githubusercontent.com/11682333/150525204-7e279d73-ea21-4805-8837-149d6e6cd084.jpg)
-![souris-de-voyage-sans-fil-3-boutons-compact-dongle-nano-portee-8m-ordinateur-tablette-koenig](https://user-images.githubusercontent.com/11682333/150525211-71a3ce23-dc86-43d1-b9d9-329627acc42c.jpg)
 ![book-stack](https://user-images.githubusercontent.com/11682333/150530778-c1c1d8e6-4a62-4e24-999c-23df0892783f.jpg)
 ![brick-stack](https://user-images.githubusercontent.com/11682333/150530787-705b960e-5b4c-4c9c-a295-47d625acca2c.jpg)
 ![gaada-stack](https://user-images.githubusercontent.com/11682333/150530799-fa811076-3637-4ee5-9c20-68302e6338e7.jpg)

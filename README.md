@@ -1,6 +1,6 @@
 # Projet5_StackExchange
 The goal of this project is to propose tags for the questions written by the newbees on Stack Overflow web-site.
-These are the images under the Creative Commons licence and ued in exploration notebook for word-cloud visuals.
+These are the images under the Creative Commons licence, used in exploration notebook for word-cloud visuals.
 
 ![lamp](https://user-images.githubusercontent.com/11682333/150525004-3250b8b1-f7b3-44c5-b0ff-959369433a9f.jpg)
 ![bulb](https://user-images.githubusercontent.com/11682333/150525137-b2b8a522-c073-4b06-9fc0-b843a2352a7d.jpg)
